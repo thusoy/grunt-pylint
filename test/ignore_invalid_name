@@ -1,0 +1,4 @@
+[MESSAGES CONTROL]
+
+# C0103: Invalid name
+disable=C0103
