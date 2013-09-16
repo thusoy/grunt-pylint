@@ -24,7 +24,9 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      unecessaryPythonStuff: [
+        'tasks/bin/*.egg-info',
+      ],
     },
 
     // Configuration to be run (and then tested).
@@ -33,47 +35,72 @@ module.exports = function(grunt) {
         options: {
           rcfile: 'test/ignore_both',
         },
-        src: ['test/fixtures'],
+        src: ['test/fixtures/test_package'],
       },
       gruntConfig: {
         options: {
           disable: ['C0103', 'W0612'],
         },
-        src: ['test/fixtures']
+        src: ['test/fixtures/test_package']
       },
       combined: {
         options: {
           rcfile: 'test/ignore_invalid_name',
           disable: ['W0612'],
         },
-        src: ['test/fixtures'],
+        src: ['test/fixtures/test_package'],
       },
       errorsOnly: {
         options: {
           errorsOnly: true,
         },
-        src: 'test/fixtures',
+        src: 'test/fixtures/test_package',
       },
       ignore: {
         options: {
           ignore: 'unusedvariable.py',
         },
-        src: 'test/fixtures/',
+        src: 'test/fixtures/test_package',
+      },
+      multiFile: {
+        options: {
+          disable: ['C0103', 'C0111', 'W0612'],
+        },
+        src: ['test/fixtures/test_package', 'test/fixtures/missing_docstring.py'],
+      },
+      shouldFail_colorized: {
+        options: {
+          outputFormat: 'colorized',
+        },
+        src: 'test/fixtures/test_package',
+      },
+      shouldFail_task_override_rc: {
+        options: {
+          rcfile: 'test/ignore_both',
+          enable: 'C0103',
+        },
+        src: 'test/fixtures/test_package',
       },
       shouldFail_parseableOutput: {
         options: {
           outputFormat: 'parseable',
         },
-        src: 'test/fixtures',
+        src: 'test/fixtures/test_package',
       },
       shouldFail_symbolicIds: {
         options: {
           symbolicIds: true,
         },
-        src: 'test/fixtures',
+        src: 'test/fixtures/test_package',
+      },
+      shouldFail_colored: {
+        options: {
+          outputFormat: 'colorized',
+        },
+        src: 'test/fixtures/test_package',
       },
       shouldFail_default: {
-        src: 'test/fixtures',
+        src: 'test/fixtures/test_package',
       }
 
     },
