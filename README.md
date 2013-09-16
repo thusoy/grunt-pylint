@@ -37,48 +37,101 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.disable
+Type: `String` or `Array`
+Default: `[]`
 
-A string value that is used to do something with whatever.
+Messages to disable, either by category or by ID.
+
+#### options.enable
+Type: `String` or `Array`
+Default: `[]`
+
+Messages to enable, either by category or by ID.
+
+#### options.errorsOnly
+Type: `Boolean`
+Default: `false`
+
+Only report on error messages.
+
+#### options.ignore
+Type: `String` or `Array`
+Default: `[]`
+
+Files or directories to ignore. Must be basenames, not paths.
+
+#### options.includeIds
+Type: `Boolean`
+Default: `true`
+
+Whether to include the message IDs in the output, or just the category.
+
+#### options.outputFormat
+Type: `String`
+Alternatives: `text|colorized|parseable|html|msvs`
+Default: `"text"`
+
+What format the output will be in.
+
+#### options.rcfile
+Type: `String`
+Default: `null`
+
+A path to a rcfile to use. Messages to enable or disable given in `options.enable` and `options.disable` will override anything given in the rcfile.
+
+#### options.report
+Type: `Boolean`
+Default: `true`
+
+Whether to include a full report or just the messages.
+
+#### options.symbolicIds
+Type: `Boolean`
+Default: `false`
+
+Whether to include a symbolic name of each message in the output.
 
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In the simplest case, use all the default pylint options:
 
 ```js
 grunt.initConfig({
   pylint: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    dist: {
+      src: 'mypackage',
+    }
+  }
 })
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example, use a rcfile to specify checks to enable and disable, with overrides for one package.
 
 ```js
 grunt.initConfig({
   pylint: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      rcfile: '.pylintrc',
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    src_package: {
+      src: 'mypackage',
     },
+    tests: {
+      src: 'test',
+      options: {
+        disable: 'C0111', # missing docstring
+      }
+    }
   },
 })
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/).
+In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). To get the pylint library, run `npm run-script prepublish`. This requires that you have pip installed.
 
 ## Release History
 _(Nothing yet)_
