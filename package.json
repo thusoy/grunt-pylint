@@ -25,7 +25,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "prepublish": "pip install pylint --target tasks/bin"
+    "prepublish": "pip install pylint==0.28 --target tasks/bin && grunt clean"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
