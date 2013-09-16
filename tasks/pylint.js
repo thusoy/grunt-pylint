@@ -33,34 +33,75 @@ module.exports = function(grunt) {
       'import sys; sys.path.insert(0, r"'+pylintPath+'"); from colorama import init; init(); import pylint; pylint.run_pylint()'
     ];
 
-    if (options.enable){
-      baseArgs.push('--enable=' + options.enable);
+    var enable = "" + options.enable;
+    delete options.enable;
+
+    if (enable){
+      baseArgs.push('--enable=' + enable);
     }
-    if (options.disable){
-      baseArgs.push('--disable=' + options.disable);
+
+    var disable = "" + options.disable;
+    delete options.disable;
+
+    if (disable){
+      baseArgs.push('--disable=' + disable);
     }
-    if (options.outputFormat){
-      baseArgs.push('--output-format=' + options.outputFormat);
+
+    var outputFormat = options.outputFormat;
+    delete options.outputFormat;
+
+    if (outputFormat){
+      baseArgs.push('--output-format=' + outputFormat);
     }
-    if (options.includeIds){
+
+    var includeIds = options.includeIds;
+    delete options.includeIds;
+
+    if (includeIds){
       baseArgs.push('--include-ids=y');
     }
-    if (options.report){
+
+    var report = options.report;
+    delete options.report;
+
+    if (report){
       baseArgs.push('--report=yes');
     } else {
       baseArgs.push('--report=no');
     }
-    if (options.rcfile){
-      baseArgs.push('--rcfile=' + options.rcfile);
+
+    var rcfile = options.rcfile;
+    delete options.rcfile;
+
+    if (rcfile){
+      baseArgs.push('--rcfile=' + rcfile);
     }
-    if (options.errorsOnly){
+
+    var errorsOnly = options.errorsOnly;
+    delete options.errorsOnly;
+
+    if (errorsOnly){
       baseArgs.push('--errors-only');
     }
-    if (options.ignore){
-      baseArgs.push('--ignore=' + options.ignore);
+
+    var ignore = "" + options.ignore;
+    delete options.ignore;
+
+    if (ignore){
+      baseArgs.push('--ignore=' + ignore);
     }
-    if (options.symbolicIds){
+
+    var symbolicIds = options.symbolicIds;
+    delete options.symbolicIds;
+
+    if (symbolicIds){
       baseArgs.push('--symbols=y');
+    }
+
+    for(var prop in options){
+      if (options.hasOwnProperty(prop)){
+        grunt.fail.warn("Unknown option to pylint: '" + prop + "'");
+      }
     }
 
     var noFailures = true;
