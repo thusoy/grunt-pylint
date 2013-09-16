@@ -16,63 +16,81 @@ module.exports = function(grunt) {
     var done = this.async();
 
     var options = this.options({
-      'ignore': [],
-      'enable': [],
       'disable': [],
-      'report': false,
-      'includeIds': true,
+      'enable': [],
       'errorsOnly': false,
+      'ignore': [],
+      'includeIds': true,
+      'outputFormat': 'text',
+      'rcfile': null,
+      'report': false,
       'symbolicIds': false,
     });
-    var args = [];
+
+    var pylintPath = path.join(__dirname, 'lib');
+    var baseArgs = [
+      '-c',
+      'import sys; sys.path.insert(0, r"'+pylintPath+'"); from colorama import init; init(); import pylint; pylint.run_pylint()'
+    ];
+
     if (options.enable){
-      args.push('--enable=' + options.enable);
+      baseArgs.push('--enable=' + options.enable);
     }
     if (options.disable){
-      args.push('--disable=' + options.disable);
+      baseArgs.push('--disable=' + options.disable);
     }
     if (options.outputFormat){
-      args.push('--output-format=' + options.outputFormat);
+      baseArgs.push('--output-format=' + options.outputFormat);
     }
     if (options.includeIds){
-      args.push('--include-ids=y');
+      baseArgs.push('--include-ids=y');
     }
     if (options.report){
-      args.push('--report=yes');
+      baseArgs.push('--report=yes');
     } else {
-      args.push('--report=no');
+      baseArgs.push('--report=no');
     }
     if (options.rcfile){
-      args.push('--rcfile=' + options.rcfile);
+      baseArgs.push('--rcfile=' + options.rcfile);
     }
     if (options.errorsOnly){
-      args.push('--errors-only');
+      baseArgs.push('--errors-only');
     }
     if (options.ignore){
-      args.push('--ignore=' + options.ignore);
+      baseArgs.push('--ignore=' + options.ignore);
     }
     if (options.symbolicIds){
-      args.push('--symbols=y');
+      baseArgs.push('--symbols=y');
     }
 
-    args.push(this.filesSrc);
+    var noFailures = true;
+    var runsRemaining = this.filesSrc.length;
 
-    var pylintPath = path.join(__dirname, 'bin');
-    grunt.log.verbose.write('Pylintpath: ' + pylintPath);
+    this.filesSrc.forEach(function(module_or_package){
 
-    grunt.log.verbose.write('Running pylint with args: ' + args);
-    // Trigger the pylint subprocess
-    grunt.util.spawn({
-      'cmd': 'python',
-      'args': ['-c', 'import sys; sys.path.insert(0, r"'+pylintPath+'"); import pylint; pylint.run_pylint()'].concat(args),
-      'opts': {
-        'stdio': 'inherit',
-      },
-    }, function(error, result, code){
-      if (code === 0){
-        grunt.log.ok("No python lint found.");
-      }
-      done(code === 0);
+      var args = baseArgs.slice(0);
+      args.push(module_or_package);
+
+      grunt.log.verbose.writeln('Running pylint with args: ' + args.join(" "));
+
+      // Spawn the pylint subprocess
+      grunt.util.spawn({
+        'cmd': 'python',
+        'args': args,
+        'opts': {
+          'stdio': 'inherit',
+        },
+      }, function(error, result, code){
+        if (code === 0){
+          grunt.log.ok("No lint in " + module_or_package);
+        } else {
+          noFailures = false;
+        }
+        runsRemaining -= 1;
+        if (runsRemaining === 0){
+          done(noFailures);
+        }
+      });
     });
 
   });
