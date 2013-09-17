@@ -67,6 +67,12 @@ Default: `true`
 
 Whether to include the message IDs in the output, or just the category.
 
+#### options.outputFile
+Type: `String`
+Default: `null`
+
+A file to save the output to.
+
 #### options.outputFormat
 Type: `String`
 Alternatives: `text|colorized|parseable|html|msvs`

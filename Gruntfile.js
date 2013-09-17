@@ -68,6 +68,12 @@ module.exports = function(grunt) {
         },
         src: ['test/fixtures/test_package', 'test/fixtures/missing_docstring.py'],
       },
+      shouldFail_writeToFile: {
+        options: {
+          outputFile: "reports/pylint.out",
+        },
+        src: "test/fixtures/test_package",
+      },
       shouldFail_colorized: {
         options: {
           outputFormat: 'colorized',
@@ -90,12 +96,6 @@ module.exports = function(grunt) {
       shouldFail_symbolicIds: {
         options: {
           symbolicIds: true,
-        },
-        src: 'test/fixtures/test_package',
-      },
-      shouldFail_colored: {
-        options: {
-          outputFormat: 'colorized',
         },
         src: 'test/fixtures/test_package',
       },

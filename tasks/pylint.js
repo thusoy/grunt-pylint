@@ -12,25 +12,21 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
-  grunt.registerMultiTask('pylint', 'Run all python code through pylint', function(){
-    var done = this.async();
-
-    var options = this.options({
-      'disable': [],
-      'enable': [],
-      'errorsOnly': false,
-      'ignore': [],
-      'includeIds': true,
-      'outputFormat': 'text',
-      'rcfile': null,
-      'report': false,
-      'symbolicIds': false,
-    });
+  var buildBaseArgs = function(options){
+    // Build the base argument list sent to python from the options object
 
     var pylintPath = path.join(__dirname, 'lib');
+
     var baseArgs = [
       '-c',
-      'import sys; sys.path.insert(0, r"'+pylintPath+'"); from colorama import init; init(); import pylint; pylint.run_pylint()'
+      [
+        'import sys',
+        'sys.path.insert(0, r"'+pylintPath+'")',
+        'from colorama import init',
+        'init()',
+        'import pylint',
+        'pylint.run_pylint()',
+      ].join("; "),
     ];
 
     var enable = "" + options.enable;
@@ -98,13 +94,43 @@ module.exports = function(grunt) {
       baseArgs.push('--symbols=y');
     }
 
+    // Fail if there's any options remaining now
     for(var prop in options){
       if (options.hasOwnProperty(prop)){
         grunt.fail.warn("Unknown option to pylint: '" + prop + "'");
       }
     }
 
+    return baseArgs;
+  };
+
+  grunt.registerMultiTask('pylint', 'Run all python code through pylint', function(){
+    var done = this.async();
+
+    var options = this.options({
+      'disable': [],
+      'enable': [],
+      'errorsOnly': false,
+      'ignore': [],
+      'includeIds': true,
+      'outputFile': null,
+      'outputFormat': 'text',
+      'rcfile': null,
+      'report': false,
+      'symbolicIds': false,
+    });
+
+    // Capture task stdout for writing to file later
+    var output = "";
+    var outputFile = options.outputFile;
+    delete options.outputFile;
+
+    var baseArgs = buildBaseArgs(options);
+
     var noFailures = true;
+
+    // pylint only supports running against a single module or package at a time,
+    // so we haave to trigger it several times if we have several targets
     var runsRemaining = this.filesSrc.length;
 
     this.filesSrc.forEach(function(module_or_package){
@@ -118,20 +144,26 @@ module.exports = function(grunt) {
       grunt.util.spawn({
         'cmd': 'python',
         'args': args,
-        'opts': {
-          'stdio': 'inherit',
-        },
       }, function(error, result, code){
         if (code === 0){
           grunt.log.ok("No lint in " + module_or_package);
         } else {
+          grunt.log.verbose.writeln("Stderr from pylint: " + result.stderr);
           noFailures = false;
         }
+        grunt.log.writeln(result.stdout);
+        output += result.stdout;
+
         runsRemaining -= 1;
         if (runsRemaining === 0){
+          if (outputFile){
+            grunt.file.write(outputFile, output);
+            grunt.log.ok("Results written to " + outputFile);
+          }
           done(noFailures);
         }
       });
+
     });
 
   });
