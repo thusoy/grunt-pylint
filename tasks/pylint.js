@@ -111,6 +111,7 @@ module.exports = function(grunt) {
       'disable': [],
       'enable': [],
       'errorsOnly': false,
+      'force': false,
       'ignore': [],
       'includeIds': true,
       'outputFile': null,
@@ -119,6 +120,9 @@ module.exports = function(grunt) {
       'report': false,
       'symbolicIds': false,
     });
+
+    var force = options.force;
+    delete options.force;
 
     // Capture task stdout for writing to file later
     var output = "";
@@ -145,14 +149,19 @@ module.exports = function(grunt) {
         'cmd': 'python',
         'args': args,
       }, function(error, result, code){
+
+        grunt.log.writeln(result.stdout);
+        output += result.stdout;
+
         if (code === 0){
           grunt.log.ok("No lint in " + module_or_package);
         } else {
           grunt.log.verbose.writeln("Stderr from pylint: " + result.stderr);
           noFailures = false;
+          if (force){
+            grunt.log.warn("Linting errors found, but `force` was used, continuing...");
+          }
         }
-        grunt.log.writeln(result.stdout);
-        output += result.stdout;
 
         runsRemaining -= 1;
         if (runsRemaining === 0){
@@ -160,7 +169,7 @@ module.exports = function(grunt) {
             grunt.file.write(outputFile, output);
             grunt.log.ok("Results written to " + outputFile);
           }
-          done(noFailures);
+          done(noFailures || force);
         }
       });
 

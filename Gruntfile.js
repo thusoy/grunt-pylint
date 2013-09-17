@@ -68,9 +68,10 @@ module.exports = function(grunt) {
         },
         src: ['test/fixtures/test_package', 'test/fixtures/missing_docstring.py'],
       },
-      shouldFail_writeToFile: {
+      writeToFile: {
         options: {
           outputFile: "reports/pylint.out",
+          force: true,
         },
         src: "test/fixtures/test_package",
       },

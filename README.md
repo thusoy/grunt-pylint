@@ -55,6 +55,12 @@ Default: `false`
 
 Only report on error messages.
 
+#### options.force
+Type: `Boolean`
+Default: `false`
+
+Never fail the task.
+
 #### options.ignore
 Type: `String` or `Array`
 Default: `[]`
