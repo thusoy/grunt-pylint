@@ -159,4 +159,4 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). To get all dependencies installed, run `npm run-script devsetup`. This requires that you have pip installed.
 
 ## Release History
-_(Nothing yet)_
+19-09-2013 v.0.1.0    Initial release.
