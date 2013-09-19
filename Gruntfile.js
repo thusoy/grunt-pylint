@@ -75,6 +75,12 @@ module.exports = function(grunt) {
         },
         src: "test/fixtures/test_package",
       },
+      shouldFail_messageTemplate: {
+        options: {
+          'messageTemplate': '{line}: {msg}',
+        },
+        src: 'test/fixtures/test_package',
+      },
       shouldFail_colorized: {
         options: {
           outputFormat: 'colorized',
@@ -90,7 +96,7 @@ module.exports = function(grunt) {
       },
       shouldFail_parseableOutput: {
         options: {
-          outputFormat: 'parseable',
+          messageFormat: 'parseable',
         },
         src: 'test/fixtures/test_package',
       },

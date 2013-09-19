@@ -22,8 +22,6 @@ module.exports = function(grunt) {
       [
         'import sys',
         'sys.path.insert(0, r"'+pylintPath+'")',
-        'from colorama import init',
-        'init()',
         'import pylint',
         'pylint.run_pylint()',
       ].join("; "),
@@ -43,18 +41,27 @@ module.exports = function(grunt) {
       baseArgs.push('--disable=' + disable);
     }
 
+    var messageTemplate = options.messageTemplate;
+    delete options.messageTemplate;
+
+    if (messageTemplate){
+      var aliases = {
+        'short': "line {line}: {msg} ({symbol})",
+        'msvs': "{path}({line}): [{msg_id}({symbol}){obj}] {msg}",
+        'parseable': "{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}",
+      };
+      if (aliases[messageTemplate] !== undefined){
+        baseArgs.push('--msg-template="' + aliases[messageTemplate] + '"');
+      } else {
+        baseArgs.push('--msg-template="' + messageTemplate + '"');
+      }
+    }
+
     var outputFormat = options.outputFormat;
     delete options.outputFormat;
 
     if (outputFormat){
       baseArgs.push('--output-format=' + outputFormat);
-    }
-
-    var includeIds = options.includeIds;
-    delete options.includeIds;
-
-    if (includeIds){
-      baseArgs.push('--include-ids=y');
     }
 
     var report = options.report;
@@ -87,13 +94,6 @@ module.exports = function(grunt) {
       baseArgs.push('--ignore=' + ignore);
     }
 
-    var symbolicIds = options.symbolicIds;
-    delete options.symbolicIds;
-
-    if (symbolicIds){
-      baseArgs.push('--symbols=y');
-    }
-
     // Fail if there's any options remaining now
     for(var prop in options){
       if (options.hasOwnProperty(prop)){
@@ -113,12 +113,11 @@ module.exports = function(grunt) {
       'errorsOnly': false,
       'force': false,
       'ignore': [],
-      'includeIds': true,
       'outputFile': null,
-      'outputFormat': 'text',
+      'outputFormat': 'colorized',
+      'messageTemplate': 'short',
       'rcfile': null,
       'report': false,
-      'symbolicIds': false,
     });
 
     var force = options.force;
@@ -166,7 +165,8 @@ module.exports = function(grunt) {
         runsRemaining -= 1;
         if (runsRemaining === 0){
           if (outputFile){
-            grunt.file.write(outputFile, output);
+            var uncoloredOutput = grunt.log.uncolor(output);
+            grunt.file.write(outputFile, uncoloredOutput);
             grunt.log.ok("Results written to " + outputFile);
           }
           done(noFailures || force);

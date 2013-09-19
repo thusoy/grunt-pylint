@@ -64,6 +64,32 @@ Type: `String` or `Array`
 
 Files or directories to ignore. Must be basenames, not paths.
 
+#### messageTemplate
+Type: `String`  
+Default: `"short"`
+
+A string specifying how to format the output messages. Should be a string something like this: `{msg_id}, line {line}: {msg}`. This string will be formatted using regular new-style python formatting, see the documentation for this here: http://docs.python.org/2/library/string.html#format-specification-mini-language
+
+Available fields you can insert into the output is:
+
+- `msg_id`: The ID of the message, like `W0103`.
+- `abspath`: The absolute path to the module where the error was found
+- `module`: The name of module, like `package.my_module.py`.
+- `obj`: The name of the object where the error was found, like MyObject or my_func.
+- `line`: The line number of the error.
+- `column`: Column number of the error.
+- `path`: Path to the module with the error.
+- `msg`: The actual error message.
+- `C`: (captial C) The first letter of the message category.
+- `category`: The category of the message, either Info, Refactor, Convention, Warning, Error or Fatal.
+- `symbol`: The symbolic name of the message, like `unused-variable` for `W0612`.
+
+Some aliases also exist:
+
+- `parseable`: `"{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}"` (this is often the one supported by external tools that read pylint output)
+- `msvs`: `"{path}({line}): [{msg_id}({symbol}){obj}] {msg}"` The format read by Visual Studio.
+- `short`: `"line {line}: {msg} ({symbol})"` This is the default.
+
 #### outputFile
 Type: `String`  
 Default: `null`
@@ -75,7 +101,7 @@ Type: `String`
 Alternatives: `text|colorized|html`
 Default: `"colorized"`
 
-What format the output will be in.
+What format the output will be in. Specifying `options.outputFormat = "html"` will ignore anything set by `options.messageFormat`.
 
 #### rcfile
 Type: `String`  
