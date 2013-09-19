@@ -63,14 +63,14 @@ module.exports = function(grunt) {
       ].join("; "),
     ];
 
-    var enable = "" + options.enable;
+    var enable = options.enable;
     delete options.enable;
 
     if (enable){
       baseArgs.push('--enable=' + enable);
     }
 
-    var disable = "" + options.disable;
+    var disable = options.disable;
     delete options.disable;
 
     if (disable){
@@ -123,7 +123,7 @@ module.exports = function(grunt) {
       baseArgs.push('--errors-only');
     }
 
-    var ignore = "" + options.ignore;
+    var ignore = options.ignore;
     delete options.ignore;
 
     if (ignore){
@@ -144,15 +144,10 @@ module.exports = function(grunt) {
     var done = this.async();
 
     var options = this.options({
-      'disable': [],
-      'enable': [],
       'errorsOnly': false,
       'force': false,
-      'ignore': [],
-      'outputFile': null,
       'outputFormat': 'colorized',
       'messageTemplate': 'short',
-      'rcfile': null,
       'report': false,
     });
 

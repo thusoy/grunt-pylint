@@ -92,7 +92,6 @@ Some aliases also exist:
 
 #### outputFile
 Type: `String`  
-Default: `null`
 
 A file to save the output to.
 
@@ -105,7 +104,6 @@ What format the output will be in. Specifying `options.outputFormat = "html"` wi
 
 #### rcfile
 Type: `String`  
-Default: `null`
 
 A path to a rcfile to use. Messages to enable or disable given in `options.enable` and `options.disable` will override anything given in the rcfile.
 
