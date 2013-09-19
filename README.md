@@ -158,7 +158,7 @@ grunt.initConfig({
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). To get the pylint library, run `npm run-script prepublish`. This requires that you have pip installed.
+In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). To get all dependencies installed, run `npm run-script devsetup`. This requires that you have pip installed.
 
 ## Release History
 _(Nothing yet)_
