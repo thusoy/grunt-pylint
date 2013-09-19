@@ -111,15 +111,14 @@ A path to a rcfile to use. Messages to enable or disable given in `options.enabl
 
 #### report
 Type: `Boolean`  
-Default: `true`
+Default: `false`
 
 Whether to include a full report or just the messages.
 
-#### symbolicIds
-Type: `Boolean`  
-Default: `false`
+#### virtualenv
+Type: `String`  
 
-Whether to include a symbolic name of each message in the output.
+A path to a virtualenv to use when linting.
 
 ### Usage Examples
 

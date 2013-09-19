@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     // Before generating any new files, remove any previously-created files.
     clean: {
       unecessaryPythonStuff: [
-        'tasks/bin/*.egg-info',
+        'tasks/lib/*.egg-info',
       ],
     },
 
@@ -74,6 +74,18 @@ module.exports = function(grunt) {
           force: true,
         },
         src: "test/fixtures/test_package",
+      },
+      virtualenv: {
+        options: {
+          virtualenv: 'test/test_virtualenv',
+        },
+        src: 'test/fixtures/test_venv.py',
+      },
+      virtualenvWin: {
+        options: {
+          virtualenv: 'test/test_virtualenv_win',
+        },
+        src: 'test/fixtures/test_venv.py',
       },
       shouldFail_messageTemplate: {
         options: {

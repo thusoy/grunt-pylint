@@ -12,14 +12,50 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
+  var getVirtualenvActivationCode = function(virtualenv){
+      var activateThisPath;
+      var activeThisPathAlternatives = [
+        // *nix activate_this path:
+        path.join(virtualenv, 'bin', 'activate_this.py'),
+        // windows style path:
+        path.join(virtualenv, 'Scripts', 'activate_this.py'),
+      ];
+      grunt.util._.forEach(activeThisPathAlternatives, function(path){
+        if (grunt.file.exists(path)){
+          activateThisPath = path;
+          return false; // stops iteration
+        }
+      });
+      if (activateThisPath === undefined){
+        grunt.fail.warn('Tried to activate virtualenv "' + virtualenv + '", but did not ' +
+          'find the file "activate_this.py" required for activation, after trying ' +
+          'these locations:\n' + activeThisPathAlternatives.join("\n") +
+          '\nMake sure this file exist at either of these locations, and try again.');
+      }
+      var activationCode = 'execfile(r"' + activateThisPath + '", ' +
+        'dict(__file__=r"' + activateThisPath + '"))';
+
+      return activationCode;
+  };
+
+
   var buildBaseArgs = function(options){
     // Build the base argument list sent to python from the options object
 
     var pylintPath = path.join(__dirname, 'lib');
 
+    var virtualenv = options.virtualenv;
+    delete options.virtualenv;
+
+    var activateVirtualenv = "pass";
+    if (virtualenv){
+      activateVirtualenv = getVirtualenvActivationCode(virtualenv);
+    }
+
     var baseArgs = [
       '-c',
       [
+        activateVirtualenv,
         'import sys',
         'sys.path.insert(0, r"'+pylintPath+'")',
         'import pylint',
