@@ -45,7 +45,7 @@ Messages to disable, either by category (like `C` for convention), by ID (like `
 #### enable
 Type: `String` or `Array`  
 
-Messages to enable, either by category or by ID.
+Messages to enable, either by category, ID or symbolic name.
 
 #### errorsOnly
 Type: `Boolean`  
@@ -148,7 +148,7 @@ grunt.initConfig({
     tests: {
       src: 'test',
       options: {
-        disable: 'C0111', # missing docstring
+        disable: 'missing-docstring',
       }
     }
   },

@@ -39,14 +39,14 @@ module.exports = function(grunt) {
       },
       gruntConfig: {
         options: {
-          disable: ['C0103', 'W0612'],
+          disable: ['unused-variable', 'invalid-name'],
         },
         src: ['test/fixtures/test_package']
       },
       combined: {
         options: {
           rcfile: 'test/ignore_invalid_name',
-          disable: ['W0612'],
+          disable: ['unused-variable'],
         },
         src: ['test/fixtures/test_package'],
       },
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
       },
       multiFile: {
         options: {
-          disable: ['C0103', 'C0111', 'W0612'],
+          disable: ['invalid-name', 'missing-docstring', 'unused-variable'],
         },
         src: ['test/fixtures/test_package', 'test/fixtures/missing_docstring.py'],
       },
@@ -102,7 +102,7 @@ module.exports = function(grunt) {
       shouldFail_task_override_rc: {
         options: {
           rcfile: 'test/ignore_both',
-          enable: 'C0103',
+          enable: 'invalid-name',
         },
         src: 'test/fixtures/test_package',
       },
