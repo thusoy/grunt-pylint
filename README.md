@@ -37,73 +37,63 @@ grunt.initConfig({
 
 ### Options
 
-#### options.disable
-Type: `String` or `Array`
-Default: `[]`
+#### disable
+Type: `String` or `Array`  
 
-Messages to disable, either by category or by ID.
+Messages to disable, either by category (like `C` for convention), by ID (like `C0103`) or by symbolic name (like `invalid-name`).
 
-#### options.enable
-Type: `String` or `Array`
-Default: `[]`
+#### enable
+Type: `String` or `Array`  
 
 Messages to enable, either by category or by ID.
 
-#### options.errorsOnly
-Type: `Boolean`
+#### errorsOnly
+Type: `Boolean`  
 Default: `false`
 
 Only report on error messages.
 
-#### options.force
-Type: `Boolean`
+#### force
+Type: `Boolean`  
 Default: `false`
 
 Never fail the task.
 
-#### options.ignore
-Type: `String` or `Array`
-Default: `[]`
+#### ignore
+Type: `String` or `Array`  
 
 Files or directories to ignore. Must be basenames, not paths.
 
-#### options.includeIds
-Type: `Boolean`
-Default: `true`
-
-Whether to include the message IDs in the output, or just the category.
-
-#### options.outputFile
-Type: `String`
+#### outputFile
+Type: `String`  
 Default: `null`
 
 A file to save the output to.
 
-#### options.outputFormat
-Type: `String`
-Alternatives: `text|colorized|parseable|html|msvs`
-Default: `"text"`
+#### outputFormat
+Type: `String`  
+Alternatives: `text|colorized|html`
+Default: `"colorized"`
 
 What format the output will be in.
 
-#### options.rcfile
-Type: `String`
+#### rcfile
+Type: `String`  
 Default: `null`
 
 A path to a rcfile to use. Messages to enable or disable given in `options.enable` and `options.disable` will override anything given in the rcfile.
 
-#### options.report
-Type: `Boolean`
+#### report
+Type: `Boolean`  
 Default: `true`
 
 Whether to include a full report or just the messages.
 
-#### options.symbolicIds
-Type: `Boolean`
+#### symbolicIds
+Type: `Boolean`  
 Default: `false`
 
 Whether to include a symbolic name of each message in the output.
-
 
 ### Usage Examples
 
