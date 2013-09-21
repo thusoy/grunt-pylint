@@ -12,6 +12,12 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
+  // Use our own uncolor func since grunt.log.uncolor doesnt support codes of the
+  // format [7;33m (only [7m and the likes) which is how pylint outputs module headers
+  var uncolor = function(str) {
+    return str.replace(/\x1B\[\d+[;\d]*m/g, '');
+  };
+
   var getVirtualenvActivationCode = function(virtualenv){
       var activateThisPath;
       var activeThisPathAlternatives = [
@@ -180,8 +186,9 @@ module.exports = function(grunt) {
         'args': args,
       }, function(error, result, code){
 
-        grunt.log.writeln(result.stdout);
-        output += result.stdout;
+        var stdout = grunt.option('no-color') ? uncolor(result.stdout) : result.stdout;
+        grunt.log.writeln(stdout);
+        output += result.stdout + '\n';
 
         if (code === 0){
           grunt.log.ok("No lint in " + module_or_package);
@@ -196,7 +203,7 @@ module.exports = function(grunt) {
         runsRemaining -= 1;
         if (runsRemaining === 0){
           if (outputFile){
-            var uncoloredOutput = grunt.log.uncolor(output);
+            var uncoloredOutput = uncolor(output);
             grunt.file.write(outputFile, uncoloredOutput);
             grunt.log.ok("Results written to " + outputFile);
           }
