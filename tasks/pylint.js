@@ -160,7 +160,6 @@ module.exports = function(grunt) {
 
     var options = this.options({
       'errorsOnly': false,
-      'externalPylint': false,
       'force': false,
       'outputFormat': 'colorized',
       'messageTemplate': 'short',
