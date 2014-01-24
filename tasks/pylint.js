@@ -50,6 +50,9 @@ module.exports = function(grunt) {
 
     var pylintPath = path.join(__dirname, 'lib');
 
+    var externalPylint = options.externalPylint;
+    delete options.externalPylint;
+
     var virtualenv = options.virtualenv;
     delete options.virtualenv;
 
@@ -58,15 +61,19 @@ module.exports = function(grunt) {
       activateVirtualenv = getVirtualenvActivationCode(virtualenv);
     }
 
+    var pythonCode = [
+      activateVirtualenv,
+    ];
+
+    if (!externalPylint) {
+      pythonCode.push('import sys; sys.path.insert(0, r"'+pylintPath+'")');
+    }
+
+    pythonCode.push('import pylint', 'pylint.run_pylint()');
+
     var baseArgs = [
       '-c',
-      [
-        activateVirtualenv,
-        'import sys',
-        'sys.path.insert(0, r"'+pylintPath+'")',
-        'import pylint',
-        'pylint.run_pylint()',
-      ].join("; "),
+      pythonCode.join("; ")
     ];
 
     var enable = options.enable;
@@ -155,6 +162,7 @@ module.exports = function(grunt) {
       'outputFormat': 'colorized',
       'messageTemplate': 'short',
       'report': false,
+      'externalPylint': false,
     });
 
     var force = options.force;
