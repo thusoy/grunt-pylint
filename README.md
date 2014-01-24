@@ -38,34 +38,40 @@ grunt.initConfig({
 ### Options
 
 #### disable
-Type: `String` or `Array`  
+Type: `String` or `Array`
 
 Messages to disable, either by category (like `C` for convention), by ID (like `C0103`) or by symbolic name (like `invalid-name`).
 
 #### enable
-Type: `String` or `Array`  
+Type: `String` or `Array`
 
 Messages to enable, either by category, ID or symbolic name.
 
 #### errorsOnly
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Only report on error messages.
 
+#### externalPylint
+Type `Boolean`
+Default: `false`
+
+use pylint modules from python interpreter in path.
+
 #### force
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Never fail the task.
 
 #### ignore
-Type: `String` or `Array`  
+Type: `String` or `Array`
 
 Files or directories to ignore. Must be basenames, not paths.
 
 #### messageTemplate
-Type: `String`  
+Type: `String`
 Default: `"short"`
 
 A string specifying how to format the output messages. Should be a string something like this: `{msg_id}, line {line}: {msg}`. This string will be formatted using regular new-style python formatting, see the documentation for this here: http://docs.python.org/2/library/string.html#format-specification-mini-language
@@ -91,30 +97,30 @@ Some aliases also exist:
 - `short`: `"line {line}: {msg} ({symbol})"` This is the default.
 
 #### outputFile
-Type: `String`  
+Type: `String`
 
 A file to save the output to.
 
 #### outputFormat
-Type: `String`  
+Type: `String`
 Alternatives: `text|colorized|html`
 Default: `"colorized"`
 
 What format the output will be in. Specifying `options.outputFormat = "html"` will ignore anything set by `options.messageFormat`.
 
 #### rcfile
-Type: `String`  
+Type: `String`
 
 A path to a rcfile to use. Messages to enable or disable given in `options.enable` and `options.disable` will override anything given in the rcfile.
 
 #### report
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Whether to include a full report or just the messages.
 
 #### virtualenv
-Type: `String`  
+Type: `String`
 
 A path to a virtualenv to use when linting.
 
