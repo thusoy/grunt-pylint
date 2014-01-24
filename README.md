@@ -97,7 +97,7 @@ Some aliases also exist:
 - `short`: `"line {line}: {msg} ({symbol})"` This is the default.
 
 #### outputFile
-Type: `String`
+Type: `String`  
 
 A file to save the output to.
 
