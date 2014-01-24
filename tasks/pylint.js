@@ -50,6 +50,9 @@ module.exports = function(grunt) {
 
     var pylintPath = path.join(__dirname, 'lib');
 
+    var externalPylint = options.external_pylint;
+    delete options.builtin_pylint;
+
     var virtualenv = options.virtualenv;
     delete options.virtualenv;
 
@@ -58,12 +61,14 @@ module.exports = function(grunt) {
       activateVirtualenv = getVirtualenvActivationCode(virtualenv);
     }
 
+    var sysPath = externalPylint ? 'sys.path.insert(0, r"'+pylintPath+'")' : '';
+
     var baseArgs = [
       '-c',
       [
         activateVirtualenv,
         'import sys',
-        'sys.path.insert(0, r"'+pylintPath+'")',
+        sysPath,
         'import pylint',
         'pylint.run_pylint()',
       ].join("; "),
