@@ -51,7 +51,7 @@ module.exports = function(grunt) {
     var pylintPath = path.join(__dirname, 'lib');
 
     var externalPylint = options.externalPylint;
-    delete options.builtin_pylint;
+    delete options.externalPylint;
 
     var virtualenv = options.virtualenv;
     delete options.virtualenv;
