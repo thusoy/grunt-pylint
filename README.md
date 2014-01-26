@@ -53,6 +53,12 @@ Default: `false`
 
 Only report on error messages.
 
+#### externalPylint
+Type `Boolean`  
+Default: `false`
+
+Use pylint modules from python interpreter in path.
+
 #### force
 Type: `Boolean`  
 Default: `false`
