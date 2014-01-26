@@ -109,3 +109,11 @@ exports.testReport = function (test) {
     test.done();
   });
 };
+
+exports.testExternalPylint = function (test) {
+  test.expect(1);
+  testutils.readReport('externalPylint', function (lines) {
+    test.equal(lines[0], 'Printed from external pylint');
+    test.done();
+  });
+};
