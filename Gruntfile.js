@@ -19,6 +19,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
+        'test/*.js',
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -47,21 +48,25 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     pylint: {
+      options: {
+        outputFile: 'reports/<%= grunt.task.current.target %>.out',
+        force: true,
+      },
       rcfile: {
         options: {
-          rcfile: 'test/ignore_both',
+          rcfile: 'test/ignore_invalid_name.pylintrc',
         },
         src: ['test/fixtures/test_package'],
       },
-      gruntConfig: {
+      disable: {
         options: {
-          disable: ['unused-variable', 'invalid-name'],
+          disable: ['unused-variable'],
         },
         src: ['test/fixtures/test_package']
       },
       combined: {
         options: {
-          rcfile: 'test/ignore_invalid_name',
+          rcfile: 'test/ignore_invalid_name.pylintrc',
           disable: ['unused-variable'],
         },
         src: ['test/fixtures/test_package'],
@@ -70,7 +75,7 @@ module.exports = function(grunt) {
         options: {
           errorsOnly: true,
         },
-        src: 'test/fixtures/test_package',
+        src: ['test/fixtures/test_package', 'test/fixtures/test_venv.py'],
       },
       ignore: {
         options: {
@@ -78,18 +83,11 @@ module.exports = function(grunt) {
         },
         src: 'test/fixtures/test_package',
       },
-      multiFile: {
-        options: {
-          disable: ['invalid-name', 'missing-docstring', 'unused-variable'],
-        },
-        src: ['test/fixtures/test_package', 'test/fixtures/missing_docstring.py'],
-      },
-      writeToFile: {
-        options: {
-          outputFile: "reports/pylint.out",
-          force: true,
-        },
-        src: "test/fixtures/test_package",
+      multipleSrcFiles: {
+        src: [
+          'test/fixtures/test_package/camelcasefunc.py',
+          'test/fixtures/test_package/unusedvariable.py',
+        ],
       },
       virtualenv: {
         options: {
@@ -103,41 +101,42 @@ module.exports = function(grunt) {
         },
         src: 'test/fixtures/test_venv.py',
       },
-      shouldFail_messageTemplate: {
+      messageTemplate: {
         options: {
-          'messageTemplate': '{line}: {msg}',
+          messageTemplate: '{line}: {msg}',
         },
         src: 'test/fixtures/test_package',
       },
-      shouldFail_colorized: {
+      HTMLOutput: {
         options: {
-          outputFormat: 'colorized',
+          outputFormat: 'html',
         },
         src: 'test/fixtures/test_package',
       },
-      shouldFail_task_override_rc: {
+      taskOverridesRc: {
         options: {
-          rcfile: 'test/ignore_both',
+          rcfile: 'test/ignore_invalid_name.pylintrc',
           enable: 'invalid-name',
+          disable: 'unused-variable',
         },
         src: 'test/fixtures/test_package',
       },
-      shouldFail_parseableOutput: {
+      templateAliases: {
         options: {
           messageTemplate: 'parseable',
         },
         src: 'test/fixtures/test_package',
       },
-      shouldFail_symbolicIds: {
+      report: {
         options: {
-          symbolicIds: true,
+          report: true,
         },
         src: 'test/fixtures/test_package',
-      },
-      shouldFail_default: {
-        src: 'test/fixtures/test_package',
       }
+    },
 
+    nodeunit: {
+      all: ['test/test_reports.js'],
     },
 
   });
@@ -145,13 +144,7 @@ module.exports = function(grunt) {
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'pylint']);
-
-  // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
-
+  grunt.registerTask('test', ['clean', 'pylint', 'nodeunit']);
   grunt.registerTask('publish', ['clean', 'release']);
-
 };

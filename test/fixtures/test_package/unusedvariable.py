@@ -1,7 +1,5 @@
-""" This file should trigger warning for unused variable and invalid
-function name.
-"""
+""" This file should trigger linting error for unused variable. """
 
-def camelCaseFunc():
+def unused_variable_func():
     """ Note the camelcase name and unused variable. Bad bad bad."""
     unused = 1

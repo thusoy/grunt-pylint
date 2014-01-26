@@ -1,5 +1,0 @@
-[MESSAGES CONTROL]
-
-# C0103: Invalid name
-# W0612: Unused variable
-disable=W0612,C0103
