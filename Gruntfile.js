@@ -10,6 +10,9 @@
 
 module.exports = function(grunt) {
 
+  // Load plugins defined in package.json
+  require('load-grunt-tasks')(grunt);
+
   // Project configuration.
   grunt.initConfig({
     jshint: {
@@ -141,11 +144,6 @@ module.exports = function(grunt) {
 
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
-
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-release');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
