@@ -157,12 +157,12 @@ module.exports = function(grunt) {
     var done = this.async();
 
     var options = this.options({
-      'errorsOnly': false,
-      'force': false,
-      'outputFormat': 'colorized',
-      'messageTemplate': 'short',
-      'report': false,
-      'externalPylint': false,
+      errorsOnly: false,
+      force: false,
+      outputFormat: 'colorized',
+      messageTemplate: 'short',
+      report: false,
+      externalPylint: false,
     });
 
     var force = options.force;
