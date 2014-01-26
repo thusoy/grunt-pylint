@@ -1,4 +1,4 @@
-# grunt-pylint
+# grunt-pylint [![Build Status](https://travis-ci.org/thusoy/grunt-pylint.png?branch=automated-tests)](https://travis-ci.org/thusoy/grunt-pylint)
 
 > Validate python code with pylint.
 
