@@ -27,6 +27,9 @@ module.exports = function(grunt) {
       unecessaryPythonStuff: [
         'tasks/lib/*.egg-info',
       ],
+      testResults: [
+        'reports',
+      ],
       compiledStuff: [
         'tasks/lib/**/*.pyc',
       ],
