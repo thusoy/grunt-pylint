@@ -27,6 +27,9 @@ module.exports = function(grunt) {
       unecessaryPythonStuff: [
         'tasks/lib/*.egg-info',
       ],
+      compiledStuff: [
+        'tasks/lib/**/*.pyc',
+      ],
     },
 
     release: {
@@ -147,5 +150,7 @@ module.exports = function(grunt) {
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
+
+  grunt.registerTask('publish', ['clean', 'release']);
 
 };
