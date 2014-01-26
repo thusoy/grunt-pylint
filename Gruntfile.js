@@ -132,7 +132,14 @@ module.exports = function(grunt) {
           report: true,
         },
         src: 'test/fixtures/test_package',
-      }
+      },
+      externalPylint: {
+        options: {
+          externalPylint: true,
+          virtualenv: 'test/test_virtualenv_with_pylint',
+        },
+        src: 'test/fixtures/test_package',
+      },
     },
 
     nodeunit: {
