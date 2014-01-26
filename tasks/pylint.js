@@ -19,29 +19,29 @@ module.exports = function(grunt) {
   };
 
   var getVirtualenvActivationCode = function(virtualenv){
-      var activateThisPath;
-      var activeThisPathAlternatives = [
-        // *nix activate_this path:
-        path.join(virtualenv, 'bin', 'activate_this.py'),
-        // windows style path:
-        path.join(virtualenv, 'Scripts', 'activate_this.py'),
-      ];
-      grunt.util._.forEach(activeThisPathAlternatives, function(path){
-        if (grunt.file.exists(path)){
-          activateThisPath = path;
-          return false; // stops iteration
-        }
-      });
-      if (activateThisPath === undefined){
-        grunt.fail.warn('Tried to activate virtualenv "' + virtualenv + '", but did not ' +
-          'find the file "activate_this.py" required for activation, after trying ' +
-          'these locations:\n' + activeThisPathAlternatives.join("\n") +
-          '\nMake sure this file exist at either of these locations, and try again.');
+    var activateThisPath;
+    var activeThisPathAlternatives = [
+      // *nix activate_this path:
+      path.join(virtualenv, 'bin', 'activate_this.py'),
+      // windows style path:
+      path.join(virtualenv, 'Scripts', 'activate_this.py'),
+    ];
+    grunt.util._.forEach(activeThisPathAlternatives, function(path){
+      if (grunt.file.exists(path)){
+        activateThisPath = path;
+        return false; // stops iteration
       }
-      var activationCode = 'execfile(r"' + activateThisPath + '", ' +
-        'dict(__file__=r"' + activateThisPath + '"))';
+    });
+    if (activateThisPath === undefined){
+      grunt.fail.warn('Tried to activate virtualenv "' + virtualenv + '", but did not ' +
+        'find the file "activate_this.py" required for activation, after trying ' +
+        'these locations:\n' + activeThisPathAlternatives.join("\n") +
+        '\nMake sure this file exist at either of these locations, and try again.');
+    }
+    var activationCode = 'execfile(r"' + activateThisPath + '", ' +
+      'dict(__file__=r"' + activateThisPath + '"))';
 
-      return activationCode;
+    return activationCode;
   };
 
 
