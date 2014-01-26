@@ -2,6 +2,7 @@
   "curly": true,
   "eqeqeq": true,
   "immed": true,
+  "maxlen": 100,
   "indent": 2,
   "latedef": true,
   "newcap": true,
