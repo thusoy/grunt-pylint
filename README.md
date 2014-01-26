@@ -165,6 +165,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). To get all dependencies installed, run `npm run-script devsetup`. This requires that you have pip installed.
 
 ## Release History
+* 26-01-2014    v0.3.0    Add option externalPylint and automate testing
 * 23-01-2014    v0.2.0    Bump pylint to 1.1
 * 21-09-2013    v0.1.1    Properly escape all color codes
 * 19-09-2013    v0.1.0    Initial release.
