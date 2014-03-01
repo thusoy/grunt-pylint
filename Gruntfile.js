@@ -8,7 +8,7 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   // Load plugins defined in package.json
   require('load-grunt-tasks')(grunt);

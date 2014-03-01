@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 
 // Read the report as lines
@@ -7,11 +9,11 @@ exports.readReport = function (reportName, callback) {
       return console.log(err);
     }
     var lines = data.split('\n');
-    for (var i = 0; i < lines.length; i++){
+    for (var i = 0; i < lines.length; i++) {
       lines[i] = lines[i].trim();
     }
     // remove blank lines from the end
-    while (lines.length && !lines[lines.length - 1]){
+    while (lines.length && !lines[lines.length - 1]) {
       lines.pop();
     }
     callback(lines);
