@@ -166,6 +166,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v0.4.0 (01-03-2014)
+Use python exec from virtualenv
+
 ### v0.3.0 (26-01-2014)
 Add option externalPylint and automate testing
 
