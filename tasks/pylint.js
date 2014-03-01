@@ -8,152 +8,138 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   var path = require('path');
 
   // Use our own uncolor func since grunt.log.uncolor doesnt support codes of the
   // format [7;33m (only [7m and the likes) which is how pylint outputs module headers
-  var uncolor = function(str) {
+  var uncolor = function (str) {
     return str.replace(/\x1B\[\d+[;\d]*m/g, '');
   };
 
-  var getVirtualenvActivationCode = function(virtualenv){
-    var activateThisPath;
-    var activeThisPathAlternatives = [
-      // *nix activate_this path:
-      path.join(virtualenv, 'bin', 'activate_this.py'),
-      // windows style path:
-      path.join(virtualenv, 'Scripts', 'activate_this.py'),
-    ];
-    activeThisPathAlternatives.forEach(function(path){
-      if (grunt.file.exists(path)){
-        activateThisPath = path;
-        return false; // stops iteration
-      }
-    });
-    if (activateThisPath === undefined){
-      grunt.fail.warn('Tried to activate virtualenv "' + virtualenv + '", but did not ' +
-        'find the file "activate_this.py" required for activation, after trying ' +
-        'these locations:\n' + activeThisPathAlternatives.join("\n") +
-        '\nMake sure this file exist at either of these locations, and try again.');
+  // Get the path to the python executable, using the options.virtualenv parameter.
+  // Will remove the virtualenv parameter from the options object if present
+  function getPythonExecutable(options, platform) {
+    if (options.virtualenv) {
+      var isWin = /^win/.test(platform);
+      var pythonExec = isWin ?
+        path.join(options.virtualenv, 'Scripts', 'python.exe') :
+        path.join(options.virtualenv, 'bin', 'python');
+      delete options.virtualenv;
+      return pythonExec;
+    } else {
+      return 'python';
     }
-    var activationCode = 'execfile(r"' + activateThisPath + '", ' +
-      'dict(__file__=r"' + activateThisPath + '"))';
+  }
 
-    return activationCode;
-  };
+  // Get the python code that will import and execute pylint
+  // Uses the options.externalPylint parameter to determine whether to use the pylint included
+  // with the plugin or an external one. externalPylint is deleted from the options object.
+  function getPythonCode(options) {
+    var pythonCode = [],
+        internalPylint = !options.externalPylint,
+        pylintPath = path.join(__dirname, 'lib');
 
-
-  var buildBaseArgs = function(options){
-    // Build the base argument list sent to python from the options object
-
-    var pylintPath = path.join(__dirname, 'lib');
-
-    var externalPylint = options.externalPylint;
-    delete options.externalPylint;
-
-    var virtualenv = options.virtualenv;
-    delete options.virtualenv;
-
-    var activateVirtualenv = "pass";
-    if (virtualenv){
-      activateVirtualenv = getVirtualenvActivationCode(virtualenv);
-    }
-
-    var pythonCode = [
-      activateVirtualenv,
-    ];
-
-    if (!externalPylint) {
-      pythonCode.push('import sys; sys.path.insert(0, r"'+pylintPath+'")');
+    if (internalPylint) {
+      pythonCode.push('import sys', 'sys.path.insert(0, r"' + pylintPath + '")');
     }
 
     pythonCode.push('import pylint', 'pylint.run_pylint()');
+    delete options.externalPylint;
+    return pythonCode.join('; ');
+  }
 
-    var baseArgs = [
-      '-c',
-      pythonCode.join("; ")
-    ];
+  // Build the argument list sent to pylint from the options object
+  var buildPylintArgs = function (options) {
+    var pylintArgs = [];
 
     var enable = options.enable;
     delete options.enable;
 
-    if (enable){
-      baseArgs.push('--enable=' + enable);
+    if (enable) {
+      pylintArgs.push('--enable=' + enable);
     }
 
     var disable = options.disable;
     delete options.disable;
 
-    if (disable){
-      baseArgs.push('--disable=' + disable);
+    if (disable) {
+      pylintArgs.push('--disable=' + disable);
     }
 
     var messageTemplate = options.messageTemplate;
     delete options.messageTemplate;
 
-    if (messageTemplate){
+    if (messageTemplate) {
       var aliases = {
         'short': "line {line}: {msg} ({symbol})",
         'msvs': "{path}({line}): [{msg_id}({symbol}){obj}] {msg}",
         'parseable': "{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}",
       };
-      if (aliases[messageTemplate] !== undefined){
-        baseArgs.push('--msg-template="' + aliases[messageTemplate] + '"');
+      if (aliases[messageTemplate] !== undefined) {
+        pylintArgs.push('--msg-template="' + aliases[messageTemplate] + '"');
       } else {
-        baseArgs.push('--msg-template="' + messageTemplate + '"');
+        pylintArgs.push('--msg-template="' + messageTemplate + '"');
       }
     }
 
     var outputFormat = options.outputFormat;
     delete options.outputFormat;
 
-    if (outputFormat){
-      baseArgs.push('--output-format=' + outputFormat);
+    if (outputFormat) {
+      pylintArgs.push('--output-format=' + outputFormat);
     }
 
     var report = options.report;
     delete options.report;
 
-    if (report){
-      baseArgs.push('--report=yes');
+    if (report) {
+      pylintArgs.push('--report=yes');
     } else {
-      baseArgs.push('--report=no');
+      pylintArgs.push('--report=no');
     }
 
     var rcfile = options.rcfile;
     delete options.rcfile;
 
-    if (rcfile){
-      baseArgs.push('--rcfile=' + rcfile);
+    if (rcfile) {
+      pylintArgs.push('--rcfile=' + rcfile);
     }
 
     var errorsOnly = options.errorsOnly;
     delete options.errorsOnly;
 
-    if (errorsOnly){
-      baseArgs.push('--errors-only');
+    if (errorsOnly) {
+      pylintArgs.push('--errors-only');
     }
 
     var ignore = options.ignore;
     delete options.ignore;
 
-    if (ignore){
-      baseArgs.push('--ignore=' + ignore);
+    if (ignore) {
+      pylintArgs.push('--ignore=' + ignore);
     }
 
     // Fail if there's any options remaining now
-    for(var prop in options){
-      if (options.hasOwnProperty(prop)){
+    for (var prop in options) {
+      if (options.hasOwnProperty(prop)) {
         grunt.fail.warn("Unknown option to pylint: '" + prop + "'");
       }
     }
 
-    return baseArgs;
+    return pylintArgs;
   };
 
-  grunt.registerMultiTask('pylint', 'Run all python code through pylint', function(){
+  grunt.registerMultiTask('pylint', 'Run all python code through pylint', function () {
+    /* This task converts the options given in the task to command line arguments, and runs pylint.
+    *
+    * This is done by first finding the python executable (from virtualenv if specified, else from
+    * path), build some python code to import and execute pylint, and then pass the pylint
+    * arguments in the following manner:
+    *
+    *   $ python -c "<import and execute pylint>" <pylint-arg-1> <pylint-arg-2> ...
+    */
     var done = this.async();
 
     var options = this.options({
@@ -165,6 +151,9 @@ module.exports = function(grunt) {
       externalPylint: false,
     });
 
+    var pythonExecutable = getPythonExecutable(options, process.platform);
+    var pythonCode = getPythonCode(options);
+
     var force = options.force;
     delete options.force;
 
@@ -173,7 +162,8 @@ module.exports = function(grunt) {
     var outputFile = options.outputFile;
     delete options.outputFile;
 
-    var baseArgs = buildBaseArgs(options);
+
+    var pylintArgs = buildPylintArgs(options);
 
     var noFailures = true;
 
@@ -181,42 +171,48 @@ module.exports = function(grunt) {
     // so we haave to trigger it several times if we have several targets
     var runsRemaining = this.filesSrc.length;
 
-    this.filesSrc.forEach(function(module_or_package){
+    this.filesSrc.forEach(function (moduleOrPackage) {
 
-      var args = baseArgs.slice(0);
-      args.push(module_or_package);
+      var args = ['-c', pythonCode].concat(pylintArgs, moduleOrPackage);
 
-      grunt.log.verbose.writeln('Running pylint with args: ' + args.join(" "));
+      grunt.log.verbose.writeln('Executing with python at: ' + pythonExecutable +
+        ', and arguments: ' + args.join(' '));
 
       // Spawn the pylint subprocess
-      grunt.util.spawn({
-        'cmd': 'python',
+      var pylint = grunt.util.spawn({
+        'cmd': pythonExecutable,
         'args': args,
-      }, function(error, result, code){
+      }, function (error, result, code) {
 
         var stdout = grunt.option('no-color') ? uncolor(result.stdout) : result.stdout;
         grunt.log.writeln(stdout);
         output += result.stdout + '\n';
 
-        if (code === 0){
-          grunt.log.ok("No lint in " + module_or_package);
+        if (code === 0) {
+          grunt.log.ok("No lint in " + moduleOrPackage);
         } else {
           grunt.log.verbose.writeln("Stderr from pylint: " + result.stderr);
           noFailures = false;
-          if (force){
+          if (force) {
             grunt.log.warn("Linting errors found, but `force` was used, continuing...");
           }
         }
 
         runsRemaining -= 1;
-        if (runsRemaining === 0){
-          if (outputFile){
+        if (runsRemaining === 0) {
+          if (outputFile) {
             var uncoloredOutput = uncolor(output);
             grunt.file.write(outputFile, uncoloredOutput);
             grunt.log.ok("Results written to " + outputFile);
           }
           done(noFailures || force);
         }
+      });
+
+      pylint.on('error', function (err) {
+        grunt.log.error("Running pylint failed with the following error: " + err);
+        grunt.log.error("I tried to launch this python: " + pythonExecutable + ", " +
+          'with the following arguments: -c "' + pythonCode + '"' + args.slice(2).join(" "));
       });
 
     });

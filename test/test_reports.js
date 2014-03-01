@@ -1,8 +1,10 @@
+'use strict';
+
 var testutils = require('./testutils.js');
 
 exports.testMsgTemplate = function (test) {
   test.expect(2);
-  testutils.readReport('messageTemplate', function(lines){
+  testutils.readReport('messageTemplate', function (lines) {
     test.equal(lines.length, 4);
     test.ok(lines.indexOf('3: Invalid function name "camelCaseFunc"') > 0);
     test.done();
@@ -31,15 +33,13 @@ exports.testEmptyReports = function (test) {
   var emptyReportTargets = [
     'combined',
     'errorsOnly',
-    'virtualenv',
-    'virtualenvWin',
   ];
   var reportsTested = 0;
   test.expect(emptyReportTargets.length);
   var testEmpty = function (lines) {
     test.equal(lines.length, 0, "Found a report that should have been empty but wasn't!");
     reportsTested++;
-    if (reportsTested === emptyReportTargets.length){
+    if (reportsTested === emptyReportTargets.length) {
       test.done();
     }
   };
@@ -88,8 +88,8 @@ exports.testTemplateAliases = function (test) {
   test.expect(2);
   testutils.readReport('templateAliases', function (lines) {
     // if on windows, make sure to use unix style slashes for the test
-    for (var i = 0; i < 4; i++){
-      while(lines[i].indexOf('\\') > 0) {
+    for (var i = 0; i < 4; i++) {
+      while (lines[i].indexOf('\\') > 0) {
         lines[i] = lines[i].replace('\\', '/');
       }
     }
@@ -106,14 +106,6 @@ exports.testReport = function (test) {
     test.ok(lines.length > 10);
     test.ok(lines.indexOf('line 3: Invalid function name "camelCaseFunc" (invalid-name)') > 0);
     test.equal(lines[6], 'Report');
-    test.done();
-  });
-};
-
-exports.testExternalPylint = function (test) {
-  test.expect(1);
-  testutils.readReport('externalPylint', function (lines) {
-    test.equal(lines[0], 'Printed from external pylint');
     test.done();
   });
 };
