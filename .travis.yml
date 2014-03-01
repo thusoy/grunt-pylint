@@ -8,6 +8,8 @@ install:
 
 script:
   - grunt
+  - cd test/integration_test
+  - ./run_test.sh
 
 notifications:
   email: false

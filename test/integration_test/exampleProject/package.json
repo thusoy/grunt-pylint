@@ -1,0 +1,7 @@
+{
+  "name": "exampleNewProject",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt-contrib-nodeunit": "~0.3.2"
+  }
+}

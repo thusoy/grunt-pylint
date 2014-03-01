@@ -31,8 +31,6 @@ exports.testEmptyReports = function (test) {
   var emptyReportTargets = [
     'combined',
     'errorsOnly',
-    'virtualenv',
-    'virtualenvWin',
   ];
   var reportsTested = 0;
   test.expect(emptyReportTargets.length);
@@ -106,14 +104,6 @@ exports.testReport = function (test) {
     test.ok(lines.length > 10);
     test.ok(lines.indexOf('line 3: Invalid function name "camelCaseFunc" (invalid-name)') > 0);
     test.equal(lines[6], 'Report');
-    test.done();
-  });
-};
-
-exports.testExternalPylint = function (test) {
-  test.expect(1);
-  testutils.readReport('externalPylint', function (lines) {
-    test.equal(lines[0], 'Printed from external pylint');
     test.done();
   });
 };

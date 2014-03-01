@@ -75,7 +75,7 @@ module.exports = function(grunt) {
         options: {
           errorsOnly: true,
         },
-        src: ['test/fixtures/test_package', 'test/fixtures/test_venv.py'],
+        src: ['test/fixtures/test_package'],
       },
       ignore: {
         options: {
@@ -88,18 +88,6 @@ module.exports = function(grunt) {
           'test/fixtures/test_package/camelcasefunc.py',
           'test/fixtures/test_package/unusedvariable.py',
         ],
-      },
-      virtualenv: {
-        options: {
-          virtualenv: 'test/test_virtualenv',
-        },
-        src: 'test/fixtures/test_venv.py',
-      },
-      virtualenvWin: {
-        options: {
-          virtualenv: 'test/test_virtualenv_win',
-        },
-        src: 'test/fixtures/test_venv.py',
       },
       messageTemplate: {
         options: {
@@ -130,13 +118,6 @@ module.exports = function(grunt) {
       report: {
         options: {
           report: true,
-        },
-        src: 'test/fixtures/test_package',
-      },
-      externalPylint: {
-        options: {
-          externalPylint: true,
-          virtualenv: 'test/test_virtualenv_with_pylint',
         },
         src: 'test/fixtures/test_package',
       },

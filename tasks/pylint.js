@@ -18,31 +18,21 @@ module.exports = function(grunt) {
     return str.replace(/\x1B\[\d+[;\d]*m/g, '');
   };
 
-  var getVirtualenvActivationCode = function(virtualenv){
-    var activateThisPath;
-    var activeThisPathAlternatives = [
-      // *nix activate_this path:
-      path.join(virtualenv, 'bin', 'activate_this.py'),
-      // windows style path:
-      path.join(virtualenv, 'Scripts', 'activate_this.py'),
-    ];
-    activeThisPathAlternatives.forEach(function(path){
-      if (grunt.file.exists(path)){
-        activateThisPath = path;
-        return false; // stops iteration
-      }
-    });
-    if (activateThisPath === undefined){
-      grunt.fail.warn('Tried to activate virtualenv "' + virtualenv + '", but did not ' +
-        'find the file "activate_this.py" required for activation, after trying ' +
-        'these locations:\n' + activeThisPathAlternatives.join("\n") +
-        '\nMake sure this file exist at either of these locations, and try again.');
+  // Get the path to the python executable, using the options.virtualenv parameter.
+  // Will remove the virtualenv parameter from the options object if present
+  function getPythonExecutable(options, platform) {
+    if (options.virtualenv) {
+      var isWin = /^win/.test(platform);
+      var pythonExec = isWin ?
+        path.join(options.virtualenv, 'Scripts', 'python.exe') :
+        path.join(options.virtualenv, 'bin', 'python');
+      delete options.virtualenv;
+      return pythonExec;
+    } else {
+      return 'python';
     }
-    var activationCode = 'execfile(r"' + activateThisPath + '", ' +
-      'dict(__file__=r"' + activateThisPath + '"))';
+  }
 
-    return activationCode;
-  };
 
 
   var buildBaseArgs = function(options){
@@ -53,16 +43,7 @@ module.exports = function(grunt) {
     var externalPylint = options.externalPylint;
     delete options.externalPylint;
 
-    var virtualenv = options.virtualenv;
-    delete options.virtualenv;
-
-    var activateVirtualenv = "pass";
-    if (virtualenv){
-      activateVirtualenv = getVirtualenvActivationCode(virtualenv);
-    }
-
     var pythonCode = [
-      activateVirtualenv,
     ];
 
     if (!externalPylint) {
@@ -165,6 +146,8 @@ module.exports = function(grunt) {
       externalPylint: false,
     });
 
+    var pythonExecutable = getPythonExecutable(options, process.platform);
+
     var force = options.force;
     delete options.force;
 
@@ -189,8 +172,8 @@ module.exports = function(grunt) {
       grunt.log.verbose.writeln('Running pylint with args: ' + args.join(" "));
 
       // Spawn the pylint subprocess
-      grunt.util.spawn({
-        'cmd': 'python',
+      var pylint = grunt.util.spawn({
+        'cmd': pythonExecutable,
         'args': args,
       }, function(error, result, code){
 
