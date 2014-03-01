@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
       options: {
         outputFile: 'reports/<%= grunt.task.current.target %>.out',
+        force: true,
       },
 
       exampleProject: {

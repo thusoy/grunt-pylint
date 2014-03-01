@@ -3,7 +3,7 @@
 # Runs a simulated install and execution of the pylint task on bash systems
 cp ../testutils.js exampleProject
 cd exampleProject
-npm install ..\..\..\
+npm install ../../../
 npm install
 grunt pylint:exampleProject
 virtualenv venv -p `which python`

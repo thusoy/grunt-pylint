@@ -134,5 +134,4 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['jshint', 'test']);
   grunt.registerTask('test', ['clean', 'pylint', 'nodeunit']);
-  grunt.registerTask('publish', ['clean', 'release']);
 };
