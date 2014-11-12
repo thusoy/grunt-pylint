@@ -1,4 +1,13 @@
 *.pyc
+*.dist-info
+*.pth
+*venv
 node_modules
 npm-debug.log
 reports
+tasks/lib/astroid
+tasks/lib/colorama
+tasks/lib/logilab
+tasks/lib/pylint
+tasks/lib/six.py
+grunt-pylint*.tgz
