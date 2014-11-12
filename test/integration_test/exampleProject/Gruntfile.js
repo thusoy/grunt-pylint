@@ -23,7 +23,6 @@ module.exports = function(grunt) {
       externalPylint: {
         options: {
           externalPylint: true,
-          virtualenv: 'venv',
         },
         src: 'test_module.py',
       },
