@@ -166,6 +166,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v1.0.0 (13-11-2014)
+Add support for python 3
+
 ### v0.4.0 (01-03-2014)
 Use python exec from virtualenv
 
