@@ -1,6 +1,9 @@
 {
   "name": "exampleNewProject",
   "version": "0.1.0",
+  "dependencies": {
+    "grunt-pylint": "file:../grunt-pylint"
+  },
   "devDependencies": {
     "grunt-contrib-nodeunit": "~0.3.2"
   }

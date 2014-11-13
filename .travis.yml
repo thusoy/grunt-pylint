@@ -1,16 +1,21 @@
-language:
-  - python
-  - node_js
+language: python
+
+python:
+  - 2.7
+  - 3.3
+  - 3.4
 
 install:
   - npm install -g grunt-cli
-  - npm install
   - npm run-script devsetup
+  - npm install
+
+  # Make sure we have npm >=2.0.0, to make local installs from package.json work
+  - npm install -g npm>=2.0.0
 
 script:
   - grunt
-  - cd test/integration_test
-  - ./run_test.sh
+  - ./test/integration_test/run_test.sh
 
 notifications:
   email: false
