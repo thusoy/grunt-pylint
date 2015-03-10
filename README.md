@@ -166,6 +166,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v1.1.0 (10-03-2015)
+Update bundled pylint to 1.4.1
+
 ### v1.0.0 (13-11-2014)
 Add support for python 3
 
