@@ -33,6 +33,7 @@ module.exports = function (grunt) {
       ],
       testResults: [
         'reports',
+        'inithooktest',
       ],
       compiledStuff: [
         'tasks/lib/**/*.pyc',
@@ -88,6 +89,12 @@ module.exports = function (grunt) {
           'test/fixtures/test_package/camelcasefunc.py',
           'test/fixtures/test_package/unusedvariable.py',
         ],
+      },
+      initHook: {
+        options: {
+          initHook: 'f = open("inithooktest", "w"); f.write("testdata"); f.close()',
+        },
+        src: 'test/fixtures/test_package'
       },
       messageTemplate: {
         options: {

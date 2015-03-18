@@ -1,6 +1,7 @@
 'use strict';
 
 var testutils = require('./testutils.js');
+var fs = require('fs');
 
 exports.testMsgTemplate = function (test) {
   test.expect(2);
@@ -74,6 +75,16 @@ exports.testHTMLOutput = function (test) {
     test.done();
   });
 };
+
+exports.testInitHook = function (test) {
+  test.expect(1);
+  // Should have created this file
+  fs.readFile('inithooktest', function (path, data) {
+    test.equal(data, 'testdata');
+    fs.unlink('inithooktest');
+    test.done();
+  });
+}
 
 exports.testTaskConfigOverridesRcfile = function (test) {
   test.expect(2);

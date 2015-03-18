@@ -39,7 +39,13 @@ module.exports = function (grunt) {
   function getPythonCode(options) {
     var pythonCode = [],
         internalPylint = !options.externalPylint,
-        pylintPath = path.join(__dirname, 'lib');
+        pylintPath = path.join(__dirname, 'lib'),
+        initHook = options.initHook;
+    delete options.initHook;
+
+    if (initHook) {
+      pythonCode.push(initHook);
+    }
 
     if (internalPylint) {
       pythonCode.push('import sys', 'sys.path.insert(0, r"' + pylintPath + '")');

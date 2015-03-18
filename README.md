@@ -70,6 +70,11 @@ Type: `String` or `Array`
 
 Files or directories to ignore. Must be basenames, not paths.
 
+#### initHook
+Type: `String`  
+
+Python code to execute before running pylint. This will be executed in the same python interpreter as pylint, and can thus be used to modify the python path before execution, or similar.
+
 #### messageTemplate
 Type: `String`  
 Default: `"short"`
