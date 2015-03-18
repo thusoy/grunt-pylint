@@ -171,6 +171,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v1.2.0 (18-03-2015)
+Add initHook option
+
 ### v1.1.0 (10-03-2015)
 Update bundled pylint to 1.4.1
 
