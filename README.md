@@ -11,6 +11,8 @@ If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out th
 npm install grunt-pylint --save-dev
 ```
 
+**Note**: Installation requires `pip` to be in your PATH (it does not however, require networking -- all dependencies are bundled with the source)
+
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
