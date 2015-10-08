@@ -5,6 +5,7 @@
     "grunt-pylint": "file:../grunt-pylint"
   },
   "devDependencies": {
-    "grunt-contrib-nodeunit": "~0.3.2"
+    "grunt-contrib-nodeunit": "~0.3.2",
+    "grunt": "~0.4.1"
   }
 }

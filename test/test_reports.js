@@ -84,7 +84,7 @@ exports.testInitHook = function (test) {
     fs.unlink('inithooktest');
     test.done();
   });
-}
+};
 
 exports.testTaskConfigOverridesRcfile = function (test) {
   test.expect(2);

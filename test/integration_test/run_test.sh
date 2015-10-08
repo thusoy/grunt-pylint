@@ -26,3 +26,4 @@ grunt pylint:externalPylint nodeunit -v
 
 # clean up
 cd ../grunt-pylint
+rm -rf ../exampleProject
