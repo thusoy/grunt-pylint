@@ -93,7 +93,7 @@ Available fields you can insert into the output is:
 - `column`: Column number of the error.
 - `path`: Path to the module with the error.
 - `msg`: The actual error message.
-- `C`: (captial C) The first letter of the message category.
+- `C`: (capital C) The first letter of the message category.
 - `category`: The category of the message, either Info, Refactor, Convention, Warning, Error or Fatal.
 - `symbol`: The symbolic name of the message, like `unused-variable` for `W0612`.
 
