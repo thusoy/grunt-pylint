@@ -100,10 +100,16 @@ module.exports = function (grunt) {
     var report = options.report;
     delete options.report;
 
+    // Make compatible with --reports as well
+    if (options.reports) {
+      report = options.reports;
+      delete options.reports;
+    }
+
     if (report) {
-      pylintArgs.push('--report=yes');
+      pylintArgs.push('--reports=y');
     } else {
-      pylintArgs.push('--report=no');
+      pylintArgs.push('--reports=n');
     }
 
     var rcfile = options.rcfile;
