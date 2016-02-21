@@ -173,6 +173,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v1.3.0 (2016-02-20)
+Update bundled pylint to 1.5.4
+
 ### v1.2.1 (2016-02-20)
 Make compatible with grunt 1.0
 
