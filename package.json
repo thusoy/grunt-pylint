@@ -2,6 +2,7 @@
   "name": "grunt-pylint",
   "description": "Validate python code with pylint.",
   "version": "1.2.0",
+  "license": "MIT",
   "homepage": "https://github.com/thusoy/grunt-pylint",
   "author": {
     "name": "Tarjei Husøy",
@@ -14,12 +15,6 @@
   "bugs": {
     "url": "https://github.com/thusoy/grunt-pylint/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/thusoy/grunt-pylint/blob/master/LICENSE-MIT"
-    }
-  ],
   "main": "Gruntfile.js",
   "engines": {
     "node": ">= 0.8.0"
