@@ -173,26 +173,26 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
-### v1.2.0 (18-03-2015)
+### v1.2.0 (2015-03-18)
 Add initHook option
 
-### v1.1.0 (10-03-2015)
+### v1.1.0 (2015-03-10)
 Update bundled pylint to 1.4.1
 
-### v1.0.0 (13-11-2014)
+### v1.0.0 (2014-11-13)
 Add support for python 3
 
-### v0.4.0 (01-03-2014)
+### v0.4.0 (2014-03-01)
 Use python exec from virtualenv
 
-### v0.3.0 (26-01-2014)
+### v0.3.0 (2014-01-26)
 Add option externalPylint and automate testing
 
-### v0.2.0 (23-01-2014)
+### v0.2.0 (2014-01-23)
 Bump pylint to 1.1
 
-### v0.1.1 (21-09-2013)
+### v0.1.1 (2013-09-21)
 Properly escape all color codes
 
-### v0.1.0 (19-09-2013)
+### v0.1.0 (2013-09-19)
 Initial release.
