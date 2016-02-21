@@ -173,6 +173,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v1.2.1 (2016-02-20)
+Make compatible with grunt 1.0
+
 ### v1.2.0 (2015-03-18)
 Add initHook option
 
