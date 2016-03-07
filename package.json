@@ -22,7 +22,7 @@
   "scripts": {
     "devsetup": "cd tasks/lib && pip install pylint==1.5.4 astroid==1.4.4 colorama==0.3.6 six==1.10.0 lazy-object-proxy==1.2.1 wrapt==1.10.6 --download . --no-use-wheel",
     "prepublish": "grunt clean",
-    "postinstall": "cd tasks/lib && pip install --no-index --no-deps ./pylint-1.5.4.tar.gz ./astroid-1.4.4.tar.gz ./colorama-0.3.6.tar.gz ./six-1.10.0.tar.gz ./lazy-object-proxy-1.2.1.tar.gz ./wrapt-1.10.6.tar.gz --target ."
+    "postinstall": "cd tasks/lib && pip install --no-index --no-deps --ignore-installed ./pylint-1.5.4.tar.gz ./astroid-1.4.4.tar.gz ./colorama-0.3.6.tar.gz ./six-1.10.0.tar.gz ./lazy-object-proxy-1.2.1.tar.gz ./wrapt-1.10.6.tar.gz --target ."
   },
   "devDependencies": {
     "grunt": ">=0.4.0",
