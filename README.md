@@ -187,6 +187,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v1.3.1 (2016-03-10)
+Add compatibility with pip < 1.5
+
 ### v1.3.0 (2016-02-20)
 Update bundled pylint to 1.5.4
 
