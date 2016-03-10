@@ -169,7 +169,21 @@ grunt.initConfig({
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/). To get all dependencies installed, run `npm run-script devsetup`. This requires that you have pip installed.
+
+The python dependencies of pylint is bundled with the package as published on npm, but is not present directly in the repository. Thus, to be able to contribute to this project, do the following:
+
+1. Fork the project
+2. Clone it locally
+3. Run `npm run devsetup` to download the python dependencies (requires pip)
+4. Run `npm install` to install the node dependencies
+5. Write a test if possible and fix the issue you're having
+6. Verify that tests pass with `grunt test`
+
+If you want to test your fixes in another project, do steps 1-3 and then run `npm link <path-to-your-local-clone>` in the other project.
+
+To ensure that the npm package works out of the box on all systems, the source distribution of the python dependencies are included and installed into tasks/lib by pip in the `postinstall` phase. This means pip is required on the system installing the package, but that seems a fair assumption for python projects.
+
+In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Changelog
 
