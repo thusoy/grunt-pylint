@@ -187,6 +187,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### Unreleased
+Remove support for python 3.3.
+
 ### v1.3.1 (2016-03-10)
 Add compatibility with pip < 1.5
 
