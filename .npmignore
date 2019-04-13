@@ -11,6 +11,7 @@ node_modules
 npm-debug.log
 reports
 tasks/lib/astroid
+tasks/lib/bin
 tasks/lib/isort
 tasks/lib/lazy_object_proxy
 tasks/lib/mccabe.py
