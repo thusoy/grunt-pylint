@@ -195,6 +195,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Changelog
 
+### v2.0.1 (2019-04-14)
+Repackage of 2.0.0 without a bundled `.python-version`.
+
 ### v2.0.0 (2019-04-13)
 Remove support for python2.7 and python 3.
 Update bundled pylint to 2.3.1.

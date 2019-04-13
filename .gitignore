@@ -1,4 +1,5 @@
 *.pyc
+.python-version
 node_modules
 npm-debug.log
 tasks/lib
