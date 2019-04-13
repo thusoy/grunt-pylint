@@ -1,7 +1,11 @@
-*.pyc
 *.dist-info
 *.pth
+*.pyc
 *venv
+.editorconfig
+.jshintrc
+.travis.yml
+grunt-pylint*.tgz
 node_modules
 npm-debug.log
 reports
@@ -19,4 +23,4 @@ tasks/lib/pylint
 tasks/lib/singledispatch.py
 tasks/lib/six.py
 tasks/lib/wrapt
-grunt-pylint*.tgz
+test/
