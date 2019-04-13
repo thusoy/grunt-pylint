@@ -1,7 +1,7 @@
 {
   "name": "grunt-pylint",
   "description": "Validate python code with pylint.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "homepage": "https://github.com/thusoy/grunt-pylint",
   "author": {
