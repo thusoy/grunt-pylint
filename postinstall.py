@@ -23,7 +23,10 @@ def main():
     if os.environ.get('GRUNT_PYLINT_SKIP_POSTINSTALL', 'no').lower().startswith('y'):
         return
 
-    # Ensure configparser installs correctly with pip>=18
+    # With pip >= 18 and setuptools < 40.7, configparser will use the PEP 518
+    # build system and try to install a newer setuptools, which will fail due to
+    # the --no-index flag we pass to prevent network access. Thus disable the
+    # PEP 518 build system to ensure we stay offline.
     os.environ['PIP_NO_BUILD_ISOLATION'] = 'n'
 
     install_cmd = [
