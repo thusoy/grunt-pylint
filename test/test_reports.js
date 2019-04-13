@@ -68,10 +68,12 @@ exports.testMultipleSrcFiles = function (test) {
   });
 };
 
-exports.testHTMLOutput = function (test) {
-  test.expect(1);
-  testutils.readReport('HTMLOutput', function (lines) {
-    test.equal(lines[0], '<html>');
+exports.testJsonOutput = function (test) {
+  test.expect(2);
+  testutils.readReport('JsonOutput', function (lines) {
+    var obj = JSON.parse(lines.join(''));
+    test.equal(obj.length, 2);
+    test.equal(obj[0].symbol, 'unused-variable');
     test.done();
   });
 };

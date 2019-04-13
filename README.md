@@ -110,10 +110,10 @@ A file to save the output to.
 
 #### outputFormat
 Type: `String`  
-Alternatives: `text|colorized`
+Alternatives: `text|colorized|json`
 Default: `"colorized"`
 
-What format the output will be in.
+What format the output will be in. If set to `json` the `messageTemplate` will be ignored.
 
 #### rcfile
 Type: `String`  

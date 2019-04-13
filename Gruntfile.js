@@ -104,9 +104,9 @@ module.exports = function (grunt) {
         },
         src: 'test/fixtures/test_package',
       },
-      HTMLOutput: {
+      JsonOutput: {
         options: {
-          outputFormat: 'html',
+          outputFormat: 'json',
         },
         src: 'test/fixtures/test_package',
       },
