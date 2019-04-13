@@ -126,6 +126,12 @@ Default: `false`
 
 Whether to include a full report or just the messages.
 
+#### score
+Type: 'Boolean'
+Default: `false`
+
+Whether to print a score summary.
+
 #### virtualenv
 Type: `String`  
 
@@ -188,6 +194,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## Changelog
 
 ### Unreleased
+Enable setting `score` to show a code quality score.
 Remove support for python 3.3.
 
 ### v1.3.1 (2016-03-10)

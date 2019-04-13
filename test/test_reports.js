@@ -120,3 +120,12 @@ exports.testReport = function (test) {
     test.done();
   });
 };
+
+exports.testScore = function (test) {
+  test.expect(2);
+  testutils.readReport('score', function (lines) {
+    test.equal(lines.length, 7);
+    test.ok(lines[6].startsWith('Your code has been rated at 5.00/10'));
+    test.done();
+  });
+};

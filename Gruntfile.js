@@ -128,6 +128,12 @@ module.exports = function (grunt) {
         },
         src: 'test/fixtures/test_package',
       },
+      score: {
+        options: {
+          score: true,
+        },
+        src: 'test/fixtures/test_package',
+      }
     },
 
     nodeunit: {
