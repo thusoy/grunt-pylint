@@ -39,7 +39,17 @@ def main():
     for package in packages:
         install_cmd.append('./' + package)
 
-    subprocess.check_call(install_cmd, cwd='tasks/lib')
+    try:
+        subprocess.check_call(install_cmd, cwd='tasks/lib')
+    except subprocess.CalledProcessError as e:
+        if e.returncode != 2:
+            raise e
+
+        # Try to work around a faulty patch applied by debian to pip
+        # https://github.com/pypa/pip/issues/3826
+        sys.stderr.write('Installing pylint dependencies failed, retrying with --system\n')
+        install_cmd.append('--system')
+        subprocess.check_call(install_cmd, cwd='tasks/lib')
 
 
 if __name__ == '__main__':
