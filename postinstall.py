@@ -16,10 +16,17 @@ packages = [
     'wrapt-1.11.1.tar.gz',
 ]
 
+py34_packages = [
+    'typing-3.6.6.tar.gz',
+]
+
 
 def main():
     if os.environ.get('GRUNT_PYLINT_SKIP_POSTINSTALL', 'no').lower().startswith('y'):
         return
+
+    if sys.version_info < (3, 5, 0):
+        packages.extend(py34_packages)
 
     install_cmd = [
         'pip',
