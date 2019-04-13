@@ -1,6 +1,7 @@
 *.dist-info
 *.pth
 *.pyc
+__pycache__
 *venv
 .editorconfig
 .jshintrc
