@@ -110,10 +110,10 @@ A file to save the output to.
 
 #### outputFormat
 Type: `String`  
-Alternatives: `text|colorized|html`
+Alternatives: `text|colorized`
 Default: `"colorized"`
 
-What format the output will be in. Specifying `options.outputFormat = "html"` will ignore anything set by `options.messageFormat`.
+What format the output will be in.
 
 #### rcfile
 Type: `String`  
