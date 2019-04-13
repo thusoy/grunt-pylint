@@ -20,9 +20,9 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "devsetup": "cd tasks/lib && pip download pylint==1.5.4 astroid==1.4.4 colorama==0.3.6 six==1.10.0 lazy-object-proxy==1.2.1 wrapt==1.10.6 --no-binary :all:",
+    "devsetup": "cd tasks/lib && pip install \"setuptools>=40.7\" && pip download astroid==2.2.5 isort==4.3.17 lazy-object-proxy==1.3.1 mccabe==0.6.1 pylint==2.3.1 six==1.12.0 typed-ast==1.3.1 typing==3.6.6 wrapt==1.11.1 --no-binary :all:",
     "prepublish": "grunt clean",
-    "postinstall": "cd tasks/lib && pip install --no-index --no-deps --ignore-installed ./pylint-1.5.4.tar.gz ./astroid-1.4.4.tar.gz ./colorama-0.3.6.tar.gz ./six-1.10.0.tar.gz ./lazy-object-proxy-1.2.1.tar.gz ./wrapt-1.10.6.tar.gz --target ."
+    "postinstall": "python postinstall.py"
   },
   "devDependencies": {
     "grunt": ">=0.4.0",

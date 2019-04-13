@@ -119,6 +119,15 @@ module.exports = function (grunt) {
       pylintArgs.push('--rcfile=' + rcfile);
     }
 
+    var score = options.score;
+    delete options.score;
+
+    if (score) {
+      pylintArgs.push('--score=y');
+    } else {
+      pylintArgs.push('--score=n');
+    }
+
     var errorsOnly = options.errorsOnly;
     delete options.errorsOnly;
 
@@ -160,6 +169,7 @@ module.exports = function (grunt) {
       outputFormat: 'colorized',
       messageTemplate: 'short',
       report: false,
+      score: false,
       externalPylint: false,
     });
 

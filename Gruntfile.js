@@ -33,6 +33,8 @@ module.exports = function (grunt) {
       ],
       testResults: [
         'reports',
+      ],
+      testHookOutput: [
         'inithooktest',
       ],
       compiledStuff: [
@@ -102,9 +104,9 @@ module.exports = function (grunt) {
         },
         src: 'test/fixtures/test_package',
       },
-      HTMLOutput: {
+      JsonOutput: {
         options: {
-          outputFormat: 'html',
+          outputFormat: 'json',
         },
         src: 'test/fixtures/test_package',
       },
@@ -128,6 +130,12 @@ module.exports = function (grunt) {
         },
         src: 'test/fixtures/test_package',
       },
+      score: {
+        options: {
+          score: true,
+        },
+        src: 'test/fixtures/test_package',
+      }
     },
 
     nodeunit: {
@@ -140,5 +148,5 @@ module.exports = function (grunt) {
   grunt.loadTasks('tasks');
 
   grunt.registerTask('default', ['jshint', 'test']);
-  grunt.registerTask('test', ['clean', 'pylint', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'pylint', 'nodeunit', 'clean:testHookOutput']);
 };

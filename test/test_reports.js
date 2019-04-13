@@ -7,7 +7,8 @@ exports.testMsgTemplate = function (test) {
   test.expect(2);
   testutils.readReport('messageTemplate', function (lines) {
     test.equal(lines.length, 4);
-    test.ok(lines.indexOf('3: Invalid function name "camelCaseFunc"') > 0);
+    test.ok(lines.indexOf('3: Function name "camelCaseFunc" doesn\'t conform to ' +
+      'snake_case naming style') > 0);
     test.done();
   });
 };
@@ -25,7 +26,8 @@ exports.testDisable = function (test) {
   test.expect(2);
   testutils.readReport('disable', function (lines) {
     test.equal(lines.length, 2);
-    test.equal(lines[1], 'line 3: Invalid function name "camelCaseFunc" (invalid-name)');
+    test.equal(lines[1], 'line 3: Function name "camelCaseFunc" doesn\'t conform to ' +
+      'snake_case naming style (invalid-name)');
     test.done();
   });
 };
@@ -53,7 +55,8 @@ exports.testIgnore = function (test) {
   test.expect(2);
   testutils.readReport('ignore', function (lines) {
     test.equal(lines.length, 2);
-    test.equal(lines[1], 'line 3: Invalid function name "camelCaseFunc" (invalid-name)');
+    test.equal(lines[1], 'line 3: Function name "camelCaseFunc" doesn\'t conform to ' +
+      'snake_case naming style (invalid-name)');
     test.done();
   });
 };
@@ -68,10 +71,11 @@ exports.testMultipleSrcFiles = function (test) {
   });
 };
 
-exports.testHTMLOutput = function (test) {
+exports.testJsonOutput = function (test) {
   test.expect(1);
-  testutils.readReport('HTMLOutput', function (lines) {
-    test.equal(lines[0], '<html>');
+  testutils.readReport('JsonOutput', function (lines) {
+    var obj = JSON.parse(lines.join(''));
+    test.equal(obj.length, 2);
     test.done();
   });
 };
@@ -81,7 +85,6 @@ exports.testInitHook = function (test) {
   // Should have created this file
   fs.readFile('inithooktest', function (path, data) {
     test.equal(data, 'testdata');
-    fs.unlink('inithooktest');
     test.done();
   });
 };
@@ -90,7 +93,8 @@ exports.testTaskConfigOverridesRcfile = function (test) {
   test.expect(2);
   testutils.readReport('taskOverridesRc', function (lines) {
     test.equal(lines.length, 2);
-    test.equal(lines[1], 'line 3: Invalid function name "camelCaseFunc" (invalid-name)');
+    test.equal(lines[1], 'line 3: Function name "camelCaseFunc" doesn\'t conform to ' +
+      'snake_case naming style (invalid-name)');
     test.done();
   });
 };
@@ -98,15 +102,16 @@ exports.testTaskConfigOverridesRcfile = function (test) {
 exports.testTemplateAliases = function (test) {
   test.expect(2);
   testutils.readReport('templateAliases', function (lines) {
+    test.equal(lines.length, 4);
     // if on windows, make sure to use unix style slashes for the test
     for (var i = 0; i < 4; i++) {
       while (lines[i].indexOf('\\') > 0) {
         lines[i] = lines[i].replace('\\', '/');
       }
     }
-    test.equal(lines.length, 4);
     test.ok(lines.indexOf('test/fixtures/test_package/camelcasefunc.py:3: ' +
-      '[C0103(invalid-name), camelCaseFunc] Invalid function name "camelCaseFunc"') > 0);
+      '[C0103(invalid-name), camelCaseFunc] Function name "camelCaseFunc" doesn\'t conform to ' +
+      'snake_case naming style') > 0);
     test.done();
   });
 };
@@ -115,8 +120,18 @@ exports.testReport = function (test) {
   test.expect(3);
   testutils.readReport('report', function (lines) {
     test.ok(lines.length > 10);
-    test.ok(lines.indexOf('line 3: Invalid function name "camelCaseFunc" (invalid-name)') > 0);
+    test.ok(lines.indexOf('line 3: Function name "camelCaseFunc" doesn\'t conform to snake_case ' +
+      'naming style (invalid-name)') > 0);
     test.equal(lines[6], 'Report');
+    test.done();
+  });
+};
+
+exports.testScore = function (test) {
+  test.expect(2);
+  testutils.readReport('score', function (lines) {
+    test.equal(lines.length, 7);
+    test.ok(lines[6].startsWith('Your code has been rated at 3.33/10'));
     test.done();
   });
 };
