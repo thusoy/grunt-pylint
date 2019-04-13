@@ -72,11 +72,10 @@ exports.testMultipleSrcFiles = function (test) {
 };
 
 exports.testJsonOutput = function (test) {
-  test.expect(2);
+  test.expect(1);
   testutils.readReport('JsonOutput', function (lines) {
     var obj = JSON.parse(lines.join(''));
     test.equal(obj.length, 2);
-    test.equal(obj[0].symbol, 'unused-variable');
     test.done();
   });
 };
