@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import subprocess
 import sys
 
@@ -24,6 +25,9 @@ py3_packages = [
 
 
 def main():
+    if os.environ.get('GRUNT_PYLINT_SKIP_POSTINSTALL', 'no').lower().startswith('y'):
+        return
+
     if sys.version_info < (3, 0, 0):
         packages.extend(py3_packages)
 

@@ -11,13 +11,15 @@ If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out th
 npm install grunt-pylint --save-dev
 ```
 
-**Note**: Installation requires the python package manager `pip` to be in your `$PATH` ([installation instructions](https://pip.pypa.io/en/stable/installing/)) (it does not however, require networking -- all dependencies are bundled with the source)
+**Note**: Installation requires the python package manager `pip` (and `python` itself) to be in your `$PATH` ([installation instructions](https://pip.pypa.io/en/stable/installing/)) (it does not however, require networking -- all dependencies are bundled with the source)
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
 grunt.loadNpmTasks('grunt-pylint');
 ```
+
+If you're having issues with installing the package due to the postinstall step, you can use your own version of pylint. Set the environment variable `GRUNT_PYLINT_SKIP_POSTINSTALL=yes` before installation, install `pylint` in your environment, and set `externalPylint: true` in the task.
 
 ## The "pylint" task
 
@@ -194,6 +196,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## Changelog
 
 ### Unreleased
+You can now set `GRUNT_PYLINT_SKIP_POSTINSTALL=y` to work around installation issues.
 Enable setting `score` to show a code quality score.
 Remove support for python 3.3.
 
