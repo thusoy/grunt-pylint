@@ -10,15 +10,11 @@ node_modules
 npm-debug.log
 reports
 tasks/lib/astroid
-tasks/lib/backports
-tasks/lib/colorama
-tasks/lib/configparser.py
 tasks/lib/isort
 tasks/lib/lazy_object_proxy
-tasks/lib/logilab
 tasks/lib/mccabe.py
 tasks/lib/pylint
-tasks/lib/singledispatch.py
 tasks/lib/six.py
+tasks/lib/typed_ast
 tasks/lib/wrapt
 test/

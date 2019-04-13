@@ -6,15 +6,13 @@ import sys
 
 # Versions here must match what is bundled with the package (see package.json)
 packages = [
-    'astroid-1.6.6.tar.gz',
-    'backports.functools_lru_cache-1.5.tar.gz',
-    'configparser-3.7.4.tar.gz',
+    'astroid-2.2.5.tar.gz',
     'isort-4.3.17.tar.gz',
     'lazy-object-proxy-1.3.1.tar.gz',
     'mccabe-0.6.1.tar.gz',
-    'pylint-1.9.4.tar.gz',
-    'singledispatch-3.4.0.3.tar.gz',
+    'pylint-2.3.1.tar.gz',
     'six-1.12.0.tar.gz',
+    'typed-ast-1.3.1.tar.gz',
     'wrapt-1.11.1.tar.gz',
 ]
 
@@ -22,12 +20,6 @@ packages = [
 def main():
     if os.environ.get('GRUNT_PYLINT_SKIP_POSTINSTALL', 'no').lower().startswith('y'):
         return
-
-    # With pip >= 18 and setuptools < 40.7, configparser will use the PEP 518
-    # build system and try to install a newer setuptools, which will fail due to
-    # the --no-index flag we pass to prevent network access. Thus disable the
-    # PEP 518 build system to ensure we stay offline.
-    os.environ['PIP_NO_BUILD_ISOLATION'] = 'n'
 
     install_cmd = [
         'pip',

@@ -199,6 +199,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 You can now set `GRUNT_PYLINT_SKIP_POSTINSTALL=y` to work around installation issues.
 Enable setting `score` to show a code quality score.
 Remove support for python2.7 and python 3.
+Update bundled pylint to 2.3.1.
 
 ### v1.3.1 (2016-03-10)
 Add compatibility with pip < 1.5
