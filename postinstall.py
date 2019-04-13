@@ -23,6 +23,9 @@ def main():
     if os.environ.get('GRUNT_PYLINT_SKIP_POSTINSTALL', 'no').lower().startswith('y'):
         return
 
+    # Ensure configparser installs correctly with pip>=18
+    os.environ['PIP_NO_BUILD_ISOLATION'] = 'n'
+
     install_cmd = [
         'pip',
         'install',
