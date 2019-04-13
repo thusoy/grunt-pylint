@@ -18,18 +18,10 @@ packages = [
     'wrapt-1.11.1.tar.gz',
 ]
 
-py3_packages = [
-    'enum34-1.1.6.tar.gz',
-    'futures-3.1.1.tar.gz',
-]
-
 
 def main():
     if os.environ.get('GRUNT_PYLINT_SKIP_POSTINSTALL', 'no').lower().startswith('y'):
         return
-
-    if sys.version_info < (3, 0, 0):
-        packages.extend(py3_packages)
 
     install_cmd = [
         'pip',

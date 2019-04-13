@@ -12,9 +12,7 @@ reports
 tasks/lib/astroid
 tasks/lib/backports
 tasks/lib/colorama
-tasks/lib/concurrent
 tasks/lib/configparser.py
-tasks/lib/enum
 tasks/lib/isort
 tasks/lib/lazy_object_proxy
 tasks/lib/logilab
