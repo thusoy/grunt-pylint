@@ -81,7 +81,6 @@ exports.testInitHook = function (test) {
   // Should have created this file
   fs.readFile('inithooktest', function (path, data) {
     test.equal(data, 'testdata');
-    fs.unlink('inithooktest');
     test.done();
   });
 };

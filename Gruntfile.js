@@ -33,6 +33,8 @@ module.exports = function (grunt) {
       ],
       testResults: [
         'reports',
+      ],
+      testHookOutput: [
         'inithooktest',
       ],
       compiledStuff: [
@@ -146,5 +148,5 @@ module.exports = function (grunt) {
   grunt.loadTasks('tasks');
 
   grunt.registerTask('default', ['jshint', 'test']);
-  grunt.registerTask('test', ['clean', 'pylint', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'pylint', 'nodeunit', 'clean:testHookOutput']);
 };
