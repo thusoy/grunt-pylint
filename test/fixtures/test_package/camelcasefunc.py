@@ -2,4 +2,3 @@
 
 def camelCaseFunc():
     """ This function has a bad name. """
-    pass
