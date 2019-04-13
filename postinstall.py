@@ -20,7 +20,7 @@ packages = [
 
 py3_packages = [
     'enum34-1.1.6.tar.gz',
-    'futures-3.2.0.tar.gz',
+    'futures-3.1.1.tar.gz',
 ]
 
 
